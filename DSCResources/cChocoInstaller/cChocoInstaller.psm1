@@ -147,10 +147,11 @@ function Get-FileDownload {
     [System.Net.ServicePointManager]::SecurityProtocol = $securityProtocolSettingsOriginal
 }
 
-Function Install-Chocolatey {
+function Install-Chocolatey {
+
     [CmdletBinding()]
-    param
-    (
+    param (
+
         [parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
         [string]
@@ -159,16 +160,21 @@ Function Install-Chocolatey {
         [parameter()]
         [string]
         $ChocoInstallScriptUrl = 'https://chocolatey.org/install.ps1'
+
     )    
+
     Write-Verbose 'Install-Chocolatey'
 
-    #Create install directory if it does not exist
-    If(-not (Test-Path -Path $InstallDir)) {
+    # Create install directory if it does not exist
+    if (-not (Test-Path -Path $InstallDir)) {
+
         Write-Verbose "[ChocoInstaller] Creating $InstallDir"
         New-Item -Path $InstallDir -ItemType Directory
+
     }
 
-    #Set permanent EnvironmentVariable
+    #Set permanent EnvironmentVariable...
+    # Question..why are we using env vars here?
     Write-Verbose 'Setting ChocolateyInstall environment variables'
     [Environment]::SetEnvironmentVariable('ChocolateyInstall', $InstallDir, [EnvironmentVariableTarget]::Machine)
     $env:ChocolateyInstall = [Environment]::GetEnvironmentVariable('ChocolateyInstall','Machine')   
